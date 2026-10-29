@@ -43,7 +43,25 @@ button {
 button:hover { filter: brightness(1.05); }
 button:disabled { opacity: 0.65; cursor: wait; }
 
-button.ghost {
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  background: var(--teal);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+a.btn:hover {
+  filter: brightness(1.05);
+}
+
+button.ghost,
+a.btn.ghost {
   background: #fff;
   color: #134e4a;
   border: 1px solid #cce3df;
