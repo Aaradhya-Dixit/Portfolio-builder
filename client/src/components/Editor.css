@@ -58,6 +58,33 @@
   gap: 16px;
 }
 
+.how-it-works p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.empty-note,
+.project-label {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.project-label {
+  font-weight: 700;
+  color: #134e4a;
+}
+
 .panel {
   border: 1px solid #d7ece8;
   border-radius: 16px;

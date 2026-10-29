@@ -25,6 +25,7 @@ img { max-width: 100%; display: block; }
 a { color: var(--accent); }
 .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
 .muted { color: var(--muted); }
+.ghost-text { opacity: 0.42; font-weight: 400; }
 .btn {
   display: inline-flex;
   align-items: center;

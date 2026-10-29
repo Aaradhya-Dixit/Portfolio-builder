@@ -6,6 +6,7 @@ export default function LivePreview({ data }) {
     () =>
       buildHtmlDocument(data, {
         photoSrc: data.profile.photo || '',
+        placeholders: true,
       }),
     [data],
   )

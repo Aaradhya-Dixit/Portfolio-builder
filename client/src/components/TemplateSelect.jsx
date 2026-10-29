@@ -1,10 +1,10 @@
-import { TEMPLATES, createDefaultData } from '../data/defaults'
+import { TEMPLATES, createGallerySample } from '../data/defaults'
 import { buildHtmlDocument } from '../portfolio/buildDocument'
 import './TemplateSelect.css'
 
 function MiniPreview({ template }) {
   const sample = {
-    ...createDefaultData(),
+    ...createGallerySample(),
     templateId: template.id,
     accent: template.accent,
     font: template.font,

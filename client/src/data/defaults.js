@@ -1,6 +1,6 @@
 // Default portfolio data shown in the editor / live preview.
 
-export const STORAGE_KEY = 'portfolio-builder-data'
+export const STORAGE_KEY = 'portfolio-builder-data-v2'
 
 export const TEMPLATES = [
   {
@@ -53,6 +53,7 @@ export const SECTION_META = {
 
 export const DEFAULT_SECTIONS = ['about', 'skills', 'projects', 'contact']
 
+/** Empty starting data for the builder form. */
 export function createDefaultData() {
   return {
     templateId: null,
@@ -60,29 +61,41 @@ export function createDefaultData() {
     font: 'inter',
     sectionOrder: [...DEFAULT_SECTIONS],
     profile: {
-      name: 'Aaradhya',
-      headline: 'Computer Science student · web developer',
-      bio: 'I like turning ideas into clean, usable websites. Currently learning full-stack development and building small tools that help other students ship their work.',
+      name: '',
+      headline: '',
+      bio: '',
       photo: '',
-      email: 'hello@example.com',
-      github: 'https://github.com',
-      linkedin: 'https://linkedin.com',
-      location: 'India',
+      email: '',
+      github: '',
+      linkedin: '',
+      location: '',
     },
-    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Python', 'Git'],
+    skills: [],
+    projects: [],
+  }
+}
+
+/** Generic content used only on template gallery cards. */
+export function createGallerySample() {
+  return {
+    ...createDefaultData(),
+    profile: {
+      name: 'Your Name',
+      headline: 'Your headline',
+      bio: 'A short intro about you',
+      photo: '',
+      email: '',
+      github: '',
+      linkedin: '',
+      location: '',
+    },
+    skills: ['Skill 1', 'Skill 2', 'Skill 3'],
     projects: [
       {
-        id: 'p1',
-        title: 'Study Timer',
-        description: 'A focused pomodoro timer with session stats and a calm, distraction-free UI.',
-        repo: 'https://github.com',
-        demo: 'https://example.com',
-      },
-      {
-        id: 'p2',
-        title: 'Campus Events',
-        description: 'A small directory of college club events with filters for date and category.',
-        repo: 'https://github.com',
+        id: 'sample-1',
+        title: 'Project title',
+        description: 'A short description of this project.',
+        repo: '',
         demo: '',
       },
     ],

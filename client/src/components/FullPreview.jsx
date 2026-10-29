@@ -8,7 +8,7 @@ export default function FullPreview({ data, onBack }) {
   const [busy, setBusy] = useState(false)
 
   const srcDoc = useMemo(
-    () => buildHtmlDocument(data, { photoSrc: data.profile.photo || '' }),
+    () => buildHtmlDocument(data, { photoSrc: data.profile.photo || '', placeholders: true }),
     [data],
   )
 
