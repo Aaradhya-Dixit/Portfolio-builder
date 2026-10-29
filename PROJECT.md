@@ -20,8 +20,8 @@ websites without coding, using ready-made templates.
 - PDF resume export (later)
 
 ## Current scope (demo)
-- Frontend only: React + Vite in the client/ folder
-- NO backend yet. Keep all data in React state (and localStorage)
+- Frontend: React + Vite in the client/ folder (data in React state + localStorage)
+- Backend scaffold: Express + Mongoose in the server/ folder
 - Clean, modern design: white and teal, simple code with comments
 ## Phase 2 scope
 - Backend in server/: Node + Express + MongoDB (Atlas) with Mongoose
@@ -42,9 +42,9 @@ websites without coding, using ready-made templates.
   server/.env as MONGO_URI (never commit .env)
 
 ### In progress / not verified
-- Backend in server/ (Express + Mongoose): [fill in: created or not yet]
-- ZIP export ("Generate Portfolio"): [fill in: working / not working / not built]
-- Desktop/mobile preview toggle: [fill in]
+- Backend in server/ (Express + Mongoose): created (health route + Atlas connect)
+- ZIP export ("Generate Portfolio"): working (builder header + full-screen preview)
+- Desktop/mobile preview toggle: working (full-screen preview)
 
 ### Folder structure
 - client/  React + Vite frontend

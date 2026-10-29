@@ -3,7 +3,8 @@ import { buildHtmlDocument, buildStyleCss, parsePhotoAsset } from '../portfolio/
 
 export async function downloadPortfolioZip(data) {
   const photo = parsePhotoAsset(data.profile.photo)
-  const photoSrc = photo ? photo.path : ''
+  // Relative path so unzipped files open with a double-click (no server).
+  const photoSrc = photo ? `./${photo.path}` : ''
   const html = buildHtmlDocument(data, { linkedCss: true, photoSrc })
   const css = buildStyleCss(data)
 
@@ -11,6 +12,7 @@ export async function downloadPortfolioZip(data) {
   zip.file('index.html', html)
   zip.file('style.css', css)
   if (photo) {
+    zip.folder('assets')
     zip.file(photo.path, photo.base64, { base64: true })
   }
 

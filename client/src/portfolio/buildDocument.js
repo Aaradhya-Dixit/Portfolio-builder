@@ -140,8 +140,9 @@ export function buildStyleCss(data) {
 export function buildHtmlDocument(data, { linkedCss = false, photoSrc = '' } = {}) {
   const title = `${data.profile.name || 'Portfolio'} — Portfolio`
   const css = buildStyleCss(data)
+  // Relative paths so the export works from file:// (double-click index.html).
   const headCss = linkedCss
-    ? `<link rel="stylesheet" href="style.css" />`
+    ? `<link rel="stylesheet" href="./style.css" />`
     : `<style>${css}</style>`
 
   return `<!DOCTYPE html>
