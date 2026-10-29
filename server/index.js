@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import authRoutes from './routes/auth.js'
 
 const PORT = process.env.PORT || 5000
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
@@ -23,10 +24,16 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true, db })
 })
 
+app.use('/api/auth', authRoutes)
+
 async function start() {
   const uri = process.env.MONGO_URI
   if (!uri) {
     console.error('Missing MONGO_URI. Copy server/.env.example to server/.env and add your Atlas URI.')
+    process.exit(1)
+  }
+  if (!process.env.JWT_SECRET) {
+    console.error('Missing JWT_SECRET. Add a long random string to server/.env')
     process.exit(1)
   }
 
