@@ -157,3 +157,15 @@ Landing page → Register/Login → Template gallery → Builder (form + live pr
 1. Polish and hardening (rate limiting, helmet, validation)
 2. Deployment
 3. README and resume prep
+## Done
+- [x] Prompt 4: Portfolio backend
+- [x] Prompt 5: Portfolio frontend (save, load, edit, download, delete; per-user drafts fixed)
+- [x] Prompt 6: Security hardening (helmet, rate limiting, CORS CLIENT_URL, startup checks, central error handling, body size limit, centralized API URL)
+
+## In progress
+
+### Ready for Next Phase
+
+## Next steps
+1. Deployment (Render / Vercel)
+2. README and resume prep

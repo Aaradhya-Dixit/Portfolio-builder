@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+import { API_BASE_URL } from './config.js'
 
 /**
  * Handle API responses and extract error messages.
@@ -27,7 +27,7 @@ async function handleResponse(res) {
  * @returns {Promise<{ token: string, user: { id: string, name: string, email: string } }>}
  */
 export async function apiRegister({ name, email, password }) {
-  const res = await fetch(`${API_URL}/api/auth/register`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password }),
@@ -41,7 +41,7 @@ export async function apiRegister({ name, email, password }) {
  * @returns {Promise<{ token: string, user: { id: string, name: string, email: string } }>}
  */
 export async function apiLogin({ email, password }) {
-  const res = await fetch(`${API_URL}/api/auth/login`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -55,7 +55,7 @@ export async function apiLogin({ email, password }) {
  * @returns {Promise<{ user: { id: string, name: string, email: string } }>}
  */
 export async function apiMe(token) {
-  const res = await fetch(`${API_URL}/api/auth/me`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

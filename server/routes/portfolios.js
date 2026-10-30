@@ -60,7 +60,7 @@ function validatePortfolio({ title, template, photo }, isUpdate = false) {
  * POST /api/portfolios
  * Create a new portfolio for the logged-in user.
  */
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const { title, template, data, design, photo } = req.body || {}
     const errors = validatePortfolio({ title, template, photo }, false)
@@ -80,8 +80,7 @@ router.post('/', async (req, res) => {
     const safe = created.toSafeJSON()
     return res.status(201).json({ portfolio: safe, ...safe })
   } catch (err) {
-    console.error('Error creating portfolio:', err)
-    return res.status(500).json({ error: 'Could not create portfolio. Please try again.' })
+    next(err)
   }
 })
 
@@ -89,7 +88,7 @@ router.post('/', async (req, res) => {
  * GET /api/portfolios
  * List all portfolios owned by the logged-in user (lightweight summaries, newest first).
  */
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const portfolios = await Portfolio.find({ owner: req.user.id })
       .sort({ updatedAt: -1 })
@@ -98,8 +97,7 @@ router.get('/', async (req, res) => {
     const summaries = portfolios.map((p) => p.toSummaryJSON())
     return res.json(summaries)
   } catch (err) {
-    console.error('Error listing portfolios:', err)
-    return res.status(500).json({ error: 'Could not fetch portfolios. Please try again.' })
+    next(err)
   }
 })
 
@@ -107,7 +105,7 @@ router.get('/', async (req, res) => {
  * GET /api/portfolios/:id
  * Retrieve a single full portfolio owned by the logged-in user.
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     if (!isValidObjectId(id)) {
@@ -123,8 +121,7 @@ router.get('/:id', async (req, res) => {
     const safe = portfolio.toSafeJSON()
     return res.json({ portfolio: safe, ...safe })
   } catch (err) {
-    console.error('Error fetching portfolio:', err)
-    return res.status(500).json({ error: 'Could not fetch portfolio. Please try again.' })
+    next(err)
   }
 })
 
@@ -132,7 +129,7 @@ router.get('/:id', async (req, res) => {
  * PUT /api/portfolios/:id
  * Update an existing portfolio owned by the logged-in user.
  */
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     if (!isValidObjectId(id)) {
@@ -163,8 +160,7 @@ router.put('/:id', async (req, res) => {
     const safe = portfolio.toSafeJSON()
     return res.json({ portfolio: safe, ...safe })
   } catch (err) {
-    console.error('Error updating portfolio:', err)
-    return res.status(500).json({ error: 'Could not update portfolio. Please try again.' })
+    next(err)
   }
 })
 
@@ -172,7 +168,7 @@ router.put('/:id', async (req, res) => {
  * DELETE /api/portfolios/:id
  * Delete a portfolio owned by the logged-in user.
  */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     if (!isValidObjectId(id)) {
@@ -187,8 +183,7 @@ router.delete('/:id', async (req, res) => {
 
     return res.json({ ok: true, message: 'Portfolio deleted successfully.', id: deleted._id })
   } catch (err) {
-    console.error('Error deleting portfolio:', err)
-    return res.status(500).json({ error: 'Could not delete portfolio. Please try again.' })
+    next(err)
   }
 })
 

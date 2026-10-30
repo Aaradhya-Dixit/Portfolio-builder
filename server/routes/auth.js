@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User } from '../models/User.js'
 import { auth } from '../middleware/auth.js'
+import { authLimiter } from '../middleware/rateLimit.js'
 
 const router = Router()
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -29,7 +30,7 @@ function validateLogin({ email, password }) {
   return errors
 }
 
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res, next) => {
   try {
     const { name, email, password } = req.body || {}
     const errors = validateRegister({ name, email, password })
@@ -54,12 +55,11 @@ router.post('/register', async (req, res) => {
     if (err.code === 11000) {
       return res.status(409).json({ error: 'An account with this email already exists. Try logging in.' })
     }
-    console.error(err)
-    return res.status(500).json({ error: 'Could not create account. Please try again.' })
+    next(err)
   }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res, next) => {
   try {
     const { email, password } = req.body || {}
     const errors = validateLogin({ email, password })
@@ -78,16 +78,19 @@ router.post('/login', async (req, res) => {
     const token = signToken(user)
     return res.json({ token, user: user.toSafeJSON() })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ error: 'Could not log in. Please try again.' })
+    next(err)
   }
 })
 
 // Handy check for the auth middleware (returns the logged-in user).
-router.get('/me', auth, async (req, res) => {
-  const user = await User.findById(req.user.id)
-  if (!user) return res.status(401).json({ error: 'Account not found. Please log in again.' })
-  return res.json({ user: user.toSafeJSON() })
+router.get('/me', auth, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id)
+    if (!user) return res.status(401).json({ error: 'Account not found. Please log in again.' })
+    return res.json({ user: user.toSafeJSON() })
+  } catch (err) {
+    next(err)
+  }
 })
 
 export default router

@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+import { API_BASE_URL } from './config.js'
 
 async function handleResponse(res) {
   let data
@@ -23,7 +23,7 @@ async function handleResponse(res) {
  * Server returns an array of summary objects: [ { id, title, template, preview, createdAt, updatedAt } ]
  */
 export async function apiGetPortfolios(token) {
-  const res = await fetch(`${API_URL}/api/portfolios`, {
+  const res = await fetch(`${API_BASE_URL}/api/portfolios`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -38,7 +38,7 @@ export async function apiGetPortfolios(token) {
  * Server returns { portfolio: safe, ...safe }
  */
 export async function apiGetPortfolio(id, token) {
-  const res = await fetch(`${API_URL}/api/portfolios/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/portfolios/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -52,7 +52,7 @@ export async function apiGetPortfolio(id, token) {
  * @param {{ title: string, template: string, data: object, design: object, photo?: string }} payload
  */
 export async function apiCreatePortfolio(payload, token) {
-  const res = await fetch(`${API_URL}/api/portfolios`, {
+  const res = await fetch(`${API_BASE_URL}/api/portfolios`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export async function apiCreatePortfolio(payload, token) {
  * @param {{ title?: string, template?: string, data?: object, design?: object, photo?: string }} payload
  */
 export async function apiUpdatePortfolio(id, payload, token) {
-  const res = await fetch(`${API_URL}/api/portfolios/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/portfolios/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export async function apiUpdatePortfolio(id, payload, token) {
  * Delete a portfolio owned by the logged-in user.
  */
 export async function apiDeletePortfolio(id, token) {
-  const res = await fetch(`${API_URL}/api/portfolios/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/portfolios/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -94,4 +94,3 @@ export async function apiDeletePortfolio(id, token) {
   })
   return handleResponse(res)
 }
-
