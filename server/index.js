@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.js'
+import portfolioRoutes from './routes/portfolios.js'
 
 const PORT = process.env.PORT || 5000
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
@@ -15,7 +16,8 @@ app.use(
     origin: [CLIENT_ORIGIN, 'http://localhost:5173', 'http://localhost:5174'],
   }),
 )
-app.use(express.json({ limit: '2mb' }))
+app.use(express.json({ limit: '5mb' }))
+app.use(express.urlencoded({ limit: '5mb', extended: true }))
 
 const DB_STATES = ['disconnected', 'connected', 'connecting', 'disconnecting']
 
@@ -25,6 +27,7 @@ app.get('/api/health', (_req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/portfolios', portfolioRoutes)
 
 async function start() {
   const uri = process.env.MONGO_URI

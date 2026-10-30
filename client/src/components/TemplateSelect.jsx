@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { TEMPLATES, createGallerySample } from '../data/defaults'
 import { buildHtmlDocument } from '../portfolio/buildDocument'
 import './TemplateSelect.css'
@@ -19,10 +21,27 @@ function MiniPreview({ template }) {
 }
 
 export default function TemplateSelect({ onPick }) {
+  const { user, logout } = useAuth()
+
   return (
     <div className="select-page">
+      <header className="select-topbar">
+        <Link to="/" className="land-logo">
+          Portfolio Builder
+        </Link>
+        <div className="select-topbar-actions">
+          {user && <span className="user-greeting">Hi, {user.name}</span>}
+          <Link to="/builder" className="btn ghost">
+            Go to builder
+          </Link>
+          <button type="button" className="ghost" onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </header>
+
       <header className="select-hero">
-        <p className="brand">Portfolio Builder</p>
+        <p className="brand">Templates</p>
         <h1>Pick a template to start</h1>
         <p className="lede">
           Hover a card to preview. You can change colours, fonts, and section order later.

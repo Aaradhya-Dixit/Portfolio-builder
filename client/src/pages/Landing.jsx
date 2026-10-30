@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import './Landing.css'
 
 const STEPS = [
@@ -37,6 +38,8 @@ const FAQS = [
 ]
 
 export default function Landing() {
+  const { user, isAuthenticated, logout } = useAuth()
+
   return (
     <div className="landing">
       <header className="land-header">
@@ -44,12 +47,26 @@ export default function Landing() {
           Portfolio Builder
         </Link>
         <nav className="land-nav">
-          <Link className="btn ghost" to="/login">
-            Login
-          </Link>
-          <Link className="btn" to="/register">
-            Get started
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <span className="user-greeting">Hi, {user?.name}</span>
+              <Link className="btn" to="/templates">
+                Templates
+              </Link>
+              <button type="button" className="btn ghost" onClick={logout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link className="btn ghost" to="/login">
+                Login
+              </Link>
+              <Link className="btn" to="/register">
+                Get started
+              </Link>
+            </>
+          )}
         </nav>
       </header>
 
@@ -60,12 +77,25 @@ export default function Landing() {
           Pick a template, add your details, and download a ready-to-host site — no coding.
         </p>
         <div className="hero-actions">
-          <Link className="btn" to="/register">
-            Get started
-          </Link>
-          <Link className="btn ghost" to="/login">
-            Login
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link className="btn" to="/templates">
+                Browse templates
+              </Link>
+              <Link className="btn ghost" to="/builder">
+                Go to builder
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link className="btn" to="/register">
+                Get started
+              </Link>
+              <Link className="btn ghost" to="/login">
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </section>
 

@@ -174,9 +174,59 @@ git push
 
 **Tool note:** switching to a different AI editor after this point, because the Cursor limit was reached. Same project folder, same `PROJECT.md`.
 
+## Completed (continued)
+
+### Prompt 2: Landing page and routing
+**Status: DONE** (finished in Antigravity)
+- [x] Landing page at `/` (header, hero, How it works, features, FAQ, footer)
+- [x] react-router routes: `/`, `/login`, `/register`, `/templates`, `/builder`
+- [x] Placeholder `/login` and `/register` pages
+- [x] Landing page responsive on mobile
+- [x] Tested and committed: "Add landing page and routing"
+
+## In progress
+
+### Prompt 3: Login and Register pages
+**Status: DONE**
+- [x] Real Login and Register pages calling the auth API
+- [x] Client-side validation and server error messages
+- [x] AuthContext (user, token, login, register, logout), session restored via `/api/auth/me`
+- [x] ProtectedRoute for `/templates` and `/builder`
+- [x] Logged-in users redirected away from `/login` and `/register`
+- [x] Logout button and user's name in the header
+- [x] API URL in an environment variable (`VITE_API_URL`)
+- [x] CORS verified and active on the server
+- [x] Built and verified
+
 ## Next steps
-1. Finish Prompt 2 (landing page and routing)
-2. **Prompt 3:** real Login and Register pages, AuthContext, ProtectedRoute for `/templates` and `/builder`, Logout button, API URL in an env variable, CORS
-3. Save and load portfolios (per user)
-4. Download mode for saved portfolios
-5. Deployment
+1. Save and load portfolios (per user)
+2. Download mode for saved portfolios
+3. Deployment
+
+## Current tool
+Using Antigravity (Cursor limit reached). Same project folder and this file.
+## In progress
+
+### Prompt 4: Portfolio backend (server/)
+- [ ] Portfolio model: owner (user id), title, template, data (form fields), design (colour, font, section order), photo, timestamps
+- [ ] Protected routes: POST, GET (list mine), GET one, PUT, DELETE under /api/portfolios
+- [ ] Every route checks the portfolio belongs to the logged-in user
+- [ ] Validation and size limits (including photo)
+- [ ] Tested with PowerShell and committed: "Add portfolio API"
+
+### Prompt 5: Portfolio frontend (client/)
+- [ ] Save button in the builder (create new, or update if editing)
+- [ ] "My portfolios" page at /portfolios (list, Edit, Delete, Download)
+- [ ] Editing loads saved data into the builder via /builder/:id
+- [ ] Empty state, loading state, error messages, delete confirmation
+- [ ] "My portfolios" link in the header
+- [ ] Tested and committed: "Add save and load portfolios"
+
+## Decisions
+- Photos stored as compressed base64 in the portfolio document (max about 1 MB). Revisit Cloudinary at deployment.
+
+## Next steps
+1. Download mode for saved portfolios (partly covered by the Download button in Prompt 5)
+2. Polish and hardening (rate limiting, helmet, validation)
+3. Deployment
+4. README and resume prep

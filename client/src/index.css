@@ -66,3 +66,14 @@ a.btn.ghost {
   color: #134e4a;
   border: 1px solid #cce3df;
 }
+
+.user-greeting {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #134e4a;
+  background: #ccfbf1;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
