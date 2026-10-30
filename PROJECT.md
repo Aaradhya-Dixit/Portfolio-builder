@@ -99,37 +99,6 @@ Landing page → Register/Login → Template gallery → Builder (form + live pr
 - [x] Short password returns 400
 - [x] Wrong password returns 401
 - [x] `/me` without token
-## Prompt 1 (paste into Cursor): Remove personal data and add clear instructions
-
-**Status:** in progress. Tick the boxes above once tested.
-
-**Prompt text:**
-
-```
-Remove all personal sample data (the name "Aaradhya", my email, etc.) from the app. In the template gallery, the preview cards should use generic placeholder content like "Your Name", "Your headline", "A short intro about you", sample skills like "Skill 1", and "Project title". In the builder, start with empty fields. Add clear labels, placeholder text and a short helper line under each field, for example: Name: "Enter your full name, e.g. Priya Sharma"; Headline: "One line about what you do, e.g. Web developer and CS student"; Bio: "Write 2-3 sentences about yourself, your interests and goals"; Photo: "Upload a clear, square photo of your face (JPG or PNG)"; Skills: "Type a skill and press Enter"; Projects: "Add each project with a title, a short description and links"; and the colour, font and section order controls get a one-line explanation. In the live preview, show faded placeholder text such as "Your name here" until the user types something. Also add a short "How it works" hint at the top of the builder.
-```
-
-**How to test:**
-- Search the whole project for "Aaradhya" and your email (Ctrl+Shift+F in Cursor). Nothing should remain.
-- Open the template gallery: previews show "Your Name", "Your headline", "Skill 1", "Project title".
-- Open the builder: all fields start empty.
-- Each field has a label, placeholder and helper line.
-- The preview shows faded placeholders until you type.
-- The "How it works" hint appears at the top of the builder.
-
-**Commit after testing:**
-
-```
-git add .
-git commit -m "Add placeholders and instructions"
-git push
-```
-
-**If something goes wrong:**
-- If Cursor changes too much, tell it: "Only do the template gallery first, then stop."
-- If your name still appears somewhere, give Cursor the exact file or screen where you see it.
-- If Cursor's limit blocks you, tell me and I'll write the code here for you to copy in.
-## Completed (continued)
 
 ### Prompt 1: Remove personal sample data and add clear instructions
 **Status: DONE**
@@ -142,40 +111,6 @@ git push
 - [x] "How it works" hint at the top of the builder
 - [x] Tested and committed: "Add placeholders and instructions"
 
-## In progress
-
-### Prompt 2: Landing page and routing
-- [ ] Landing page at `/` (header, hero, How it works, features, FAQ, footer)
-- [ ] react-router routes: `/`, `/login`, `/register`, `/templates`, `/builder`
-- [ ] Placeholder `/login` and `/register` pages
-- [ ] Tested and committed: "Add landing page and routing"
-
-## Next steps
-1. **Prompt 3:** real Login and Register pages, AuthContext, ProtectedRoute for `/templates` and `/builder`, Logout button, API URL in an env variable, CORS
-2. Save and load portfolios (per user)
-3. Download mode for saved portfolios
-4. Deployment (frontend and backend, database hosting, env variables)
-## In progress
-
-### Prompt 2: Landing page and routing
-**Status: DONE**
-- [x] Landing page at `/` (header, hero, How it works, features, FAQ, footer)
-- [x] react-router routes: `/`, `/login`, `/register`, `/templates`, `/builder`
-- [x] Placeholder `/login` and `/register` pages
-- [x] Landing page responsive on mobile
-- [x] Tested and verified
-
-**Before continuing, check what already exists:**
-- Run `git status` and `git diff` to see which files were changed or added.
-- Run the app (`npm run dev` in `client/`) and check for errors.
-- Open `/`, `/login`, `/register`, `/templates` and `/builder`.
-- Tick the boxes above for whatever already works. Only ask the AI tool to do what's missing.
-- If the app is broken, run `git restore .` to go back to the last commit (Prompt 1) and redo Prompt 2 from scratch. Only do this if you don't need any of the partial work.
-
-**Tool note:** switching to a different AI editor after this point, because the Cursor limit was reached. Same project folder, same `PROJECT.md`.
-
-## Completed (continued)
-
 ### Prompt 2: Landing page and routing
 **Status: DONE** (finished in Antigravity)
 - [x] Landing page at `/` (header, hero, How it works, features, FAQ, footer)
@@ -183,8 +118,6 @@ git push
 - [x] Placeholder `/login` and `/register` pages
 - [x] Landing page responsive on mobile
 - [x] Tested and committed: "Add landing page and routing"
-
-## In progress
 
 ### Prompt 3: Login and Register pages
 **Status: DONE**
@@ -198,35 +131,29 @@ git push
 - [x] CORS verified and active on the server
 - [x] Built and verified
 
-## Next steps
-1. Save and load portfolios (per user)
-2. Download mode for saved portfolios
-3. Deployment
-
-## Current tool
-Using Antigravity (Cursor limit reached). Same project folder and this file.
-## In progress
-
 ### Prompt 4: Portfolio backend (server/)
-- [ ] Portfolio model: owner (user id), title, template, data (form fields), design (colour, font, section order), photo, timestamps
-- [ ] Protected routes: POST, GET (list mine), GET one, PUT, DELETE under /api/portfolios
-- [ ] Every route checks the portfolio belongs to the logged-in user
-- [ ] Validation and size limits (including photo)
-- [ ] Tested with PowerShell and committed: "Add portfolio API"
+**Status: DONE**
+- [x] Portfolio model: owner (ref to User, required), title, template, data, design, photo, timestamps
+- [x] Protected routes: POST, GET (list mine), GET one, PUT, DELETE under /api/portfolios
+- [x] Ownership enforcement on all routes (404 on missing or unauthorized access)
+- [x] Validation and size limits (title, template, photo under 1 MB, valid ObjectId)
+- [x] Express JSON body limit raised to 5mb
+- [x] Tested with PowerShell: "Add portfolio API"
 
 ### Prompt 5: Portfolio frontend (client/)
-- [ ] Save button in the builder (create new, or update if editing)
-- [ ] "My portfolios" page at /portfolios (list, Edit, Delete, Download)
-- [ ] Editing loads saved data into the builder via /builder/:id
-- [ ] Empty state, loading state, error messages, delete confirmation
-- [ ] "My portfolios" link in the header
-- [ ] Tested and committed: "Add save and load portfolios"
+**Status: DONE**
+- [x] Save button in the builder (creates new with POST /api/portfolios, or updates with PUT /api/portfolios/:id)
+- [x] "My portfolios" page at /portfolios (lists user's portfolios, Edit, Delete, Download)
+- [x] Editing loads saved data into the builder via /builder/:id
+- [x] Empty state, loading state, error messages, delete confirmation
+- [x] "My portfolios" link in the header for logged-in users
+- [x] Photos resized in browser via canvas (< 600px wide, JPEG ~0.8 quality, under 1 MB check)
+- [x] Built and verified
 
 ## Decisions
 - Photos stored as compressed base64 in the portfolio document (max about 1 MB). Revisit Cloudinary at deployment.
 
 ## Next steps
-1. Download mode for saved portfolios (partly covered by the Download button in Prompt 5)
-2. Polish and hardening (rate limiting, helmet, validation)
-3. Deployment
-4. README and resume prep
+1. Polish and hardening (rate limiting, helmet, validation)
+2. Deployment
+3. README and resume prep

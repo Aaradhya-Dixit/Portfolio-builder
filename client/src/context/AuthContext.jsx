@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { apiLogin, apiMe, apiRegister } from '../api/auth'
+import { clearUserDraft, removeLegacyDrafts } from '../data/storage'
 
 const TOKEN_KEY = 'portfolio_auth_token'
 const USER_KEY = 'portfolio_auth_user'
@@ -23,6 +24,9 @@ export function AuthProvider({ children }) {
     let active = true
 
     async function restoreSession() {
+      // Purge any old global draft keys on app startup
+      removeLegacyDrafts()
+
       const storedToken = localStorage.getItem(TOKEN_KEY)
       if (!storedToken) {
         if (active) setLoading(false)
@@ -36,8 +40,9 @@ export function AuthProvider({ children }) {
           localStorage.setItem(USER_KEY, JSON.stringify(verifiedUser))
         }
       } catch (err) {
-        // If 401 unauthorized or invalid token, reset session
+        // If 401 unauthorized or invalid token, reset session and draft
         if (active) {
+          if (user?.id) clearUserDraft(user.id)
           setToken(null)
           setUser(null)
           localStorage.removeItem(TOKEN_KEY)
@@ -58,6 +63,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   async function login({ email, password }) {
+    removeLegacyDrafts()
     const data = await apiLogin({ email, password })
     setToken(data.token)
     setUser(data.user)
@@ -67,6 +73,7 @@ export function AuthProvider({ children }) {
   }
 
   async function register({ name, email, password }) {
+    removeLegacyDrafts()
     const data = await apiRegister({ name, email, password })
     setToken(data.token)
     setUser(data.user)
@@ -76,6 +83,10 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
+    if (user?.id) {
+      clearUserDraft(user.id)
+    }
+    removeLegacyDrafts()
     setToken(null)
     setUser(null)
     localStorage.removeItem(TOKEN_KEY)

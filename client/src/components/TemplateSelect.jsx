@@ -31,6 +31,9 @@ export default function TemplateSelect({ onPick }) {
         </Link>
         <div className="select-topbar-actions">
           {user && <span className="user-greeting">Hi, {user.name}</span>}
+          <Link to="/portfolios" className="btn ghost">
+            My portfolios
+          </Link>
           <Link to="/builder" className="btn ghost">
             Go to builder
           </Link>

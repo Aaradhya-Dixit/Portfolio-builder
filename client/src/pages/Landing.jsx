@@ -50,6 +50,9 @@ export default function Landing() {
           {isAuthenticated ? (
             <>
               <span className="user-greeting">Hi, {user?.name}</span>
+              <Link className="btn ghost" to="/portfolios">
+                My portfolios
+              </Link>
               <Link className="btn" to="/templates">
                 Templates
               </Link>
@@ -79,11 +82,11 @@ export default function Landing() {
         <div className="hero-actions">
           {isAuthenticated ? (
             <>
-              <Link className="btn" to="/templates">
-                Browse templates
+              <Link className="btn" to="/portfolios">
+                My portfolios
               </Link>
-              <Link className="btn ghost" to="/builder">
-                Go to builder
+              <Link className="btn ghost" to="/templates">
+                Browse templates
               </Link>
             </>
           ) : (
